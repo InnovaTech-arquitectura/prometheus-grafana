@@ -1,0 +1,20 @@
+groups:
+  - name: example-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: avg(rate(node_cpu_seconds_total{mode="system"}[5m])) by (instance) > 0.7
+        for: 1m
+        labels:
+          severity: "critical"
+        annotations:
+          summary: "Alta carga de CPU en {{ $labels.instance }}"
+          description: "La carga de CPU ha sido superior al 70% por más de 1 minuto."
+
+      - alert: LowDiskSpace
+        expr: node_filesystem_free_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"} < 0.2
+        for: 5m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "Espacio en disco bajo en {{ $labels.instance }}"
+          description: "El espacio en disco es inferior al 20%."
