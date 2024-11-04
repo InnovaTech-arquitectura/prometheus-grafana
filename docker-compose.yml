@@ -1,16 +1,17 @@
 version: '3.8'
 services:
   prometheus:
-    image: prom/prometheus:latest
+    build:
+      context: .
+      dockerfile: Dockerfile  # Asegúrate de que el Dockerfile se llame "Dockerfile" o ajusta el nombre aquí
     container_name: prometheus
     env_file: .env
     volumes:
-      - ./prometheus/prometheus.yml.template:/etc/prometheus/prometheus.yml.template
+      - ./prometheus/prometheus.yml.${ENVIRONMENT}:/etc/prometheus/prometheus.yml
       - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
-      - ./entrypoint.sh:/entrypoint.sh
+      - ./.env:/etc/prometheus/.env # Copia el archivo .env al contenedor
     ports:
       - "9090:9090"
-    entrypoint: ["/entrypoint.sh"]
     networks:
       - monitoring
     restart: always

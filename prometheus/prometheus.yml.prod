@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert.rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['${PROMETHEUS_URL}']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: [${NODE_EXPORTER_TARGETS}]
+
+  - job_name: 'load_balancer'
+    static_configs:
+      - targets: [${LOAD_BALANCER}]
+
+  - job_name: 'api_gateway'
+    static_configs:
+      - targets: [${API_GATEWAY}]
+
+  - job_name: 'nginx_web_client'
+    static_configs:
+      - targets: [${NGINX_WEB_CLIENT}]
+
+  - job_name: 'sv_users'
+    static_configs:
+      - targets: [${SV_USERS}]
+
+  - job_name: 'sv_support'
+    static_configs:
+      - targets: [${SV_SUPPORT}]
+
+  - job_name: 'sv_ecommerce'
+    static_configs:
+      - targets: [${SV_ECOMMERCE}]
+
+  - job_name: 'sv_inventory'
+    static_configs:
+      - targets: [${SV_INVENTORY}]
