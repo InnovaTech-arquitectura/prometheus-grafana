@@ -1,0 +1,84 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert.rules.yml"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['10.43.100.143:9090']  # Prometheus ejecutándose en 10.43.100.143
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets:
+          - '10.43.100.206:9100'  # Node Exporter en Web Portal de Clientes
+          - '10.43.100.240:9100'  # Node Exporter en Web Portal de Administradores
+          - '10.43.101.125:9100'  # Node Exporter en API Gateway y otros servicios
+          - '10.43.100.211:9100'  # Node Exporter en Servicio de Inventario
+          - '10.43.100.143:9100'  # Node Exporter en Aplicación Autorización
+          - '10.43.100.108:9100'  # Node Exporter en Cluster DB
+
+  - job_name: 'web_portals'
+    static_configs:
+      - targets:
+          - '10.43.100.206:80'    # Nginx Web Client (Portal para Clientes)
+          - '10.43.100.240:80'    # Nginx Web Admin (Portal para Administradores)
+
+  - job_name: 'load_balancer'
+    static_configs:
+      - targets:
+          - '10.43.100.206:8100'  # Load Balancer en el puerto 8100
+
+  - job_name: 'api_gateway_kong'
+    static_configs:
+      - targets:
+          - '10.43.100.206:8000'  # Kong API Gateway en 10.43.100.206 (puerto HTTP)
+          - '10.43.100.206:8001'  # Kong Admin API en 10.43.100.206 (puerto HTTP)
+          - '10.43.101.125:8000'  # Kong API Gateway en 10.43.101.125 (puerto HTTP)
+          - '10.43.101.125:8001'  # Kong Admin API en 10.43.101.125 (puerto HTTP)
+          - '10.43.101.125:8443'  # Kong API Gateway en 10.43.101.125 (puerto HTTPS)
+          - '10.43.101.125:8444'  # Kong Admin API en 10.43.101.125 (puerto HTTPS)
+
+  - job_name: 'sv_users'
+    static_configs:
+      - targets:
+          - '10.43.101.125:5293'  # Servicio de Usuarios (sv-users) en 10.43.101.125
+
+  - job_name: 'sv_support'
+    static_configs:
+      - targets:
+          - '10.43.101.125:8090'  # Servicio de Soporte (sv-support) en 10.43.101.125
+
+  - job_name: 'sv_ecommerce'
+    static_configs:
+      - targets:
+          - '10.43.100.211:8070'  # Servicio de E-Commerce en 10.43.100.211
+
+  - job_name: 'sv_inventory'
+    static_configs:
+      - targets:
+          - '10.43.100.211:8090'  # Servicio de Inventario en 10.43.100.211
+
+  - job_name: 'authorization_app'
+    static_configs:
+      - targets:
+          - '10.43.100.143:9600'  # Aplicación de Autorización en 10.43.100.143
+
+  - job_name: 'database_postgresql'
+    static_configs:
+      - targets:
+          - '10.43.100.240:5432'  # Base de datos PostgreSQL en 10.43.100.240
+          - '10.43.100.108:5432'  # Base de datos PostgreSQL en 10.43.100.108
+
+  - job_name: 'minio_service'
+    static_configs:
+      - targets:
+          - '10.43.100.108:9000'  # MinIO en 10.43.100.108 (puerto 9000)
+          - '10.43.100.108:9001'  # MinIO en 10.43.100.108 (puerto 9001)
+
+  - job_name: 'sv_backadmin'
+    static_configs:
+      - targets:
+          - '10.43.100.108:8090'  # Servicio BackAdmin (sv-backadmin) en 10.43.100.108
