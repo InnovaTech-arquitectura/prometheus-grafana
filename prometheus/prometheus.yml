@@ -23,8 +23,8 @@ scrape_configs:
   - job_name: 'web_portals'
     static_configs:
       - targets:
-          - '10.43.101.180:80'    # Nginx Web Client (Portal para Clientes)
-          - '10.43.101.107:80'    # Nginx Web Admin (Portal para Administradores)
+          - '10.43.101.180:9113'    # Nginx Web Client (Portal para Clientes)
+          - '10.43.100.240:9113'    # Nginx Web Admin (Portal para Administradores)
 
   - job_name: 'load_balancer'
     static_configs:
@@ -82,3 +82,22 @@ scrape_configs:
     static_configs:
       - targets:
           - '10.43.101.108:8090'  # Servicio BackAdmin (sv-backadmin) en 10.43.101.108
+          
+  - job_name: 'docker_status'
+    static_configs:
+      - targets:
+          - '10.43.101.155:8081'  # Docker BackAdmin (sv-backadmin) en 10.43.101.155
+          - '10.43.101.212:8081'  # Docker Support (sv-support) en 10.43.101.212
+          - '10.43.100.194:8081'  # Docker ecommerce (sv-ecommerce) en 10.43.100.194
+          - '10.43.101.180:8081'  # Docker front clientes (front cliente) en 10.43.101.180
+          - '10.43.100.194:8082'  # Docker inventory (sv-inventory) en 10.43.100.194
+          - '10.43.100.194:8082'  # Docker inventory (sv-inventory) en 10.43.100.194
+          - '10.43.101.180:8084'  # Docker load balancer (load balancer) en 10.43.101.180
+          - '10.43.101.155:8084'  # Docker load balancer (load balancer) en 10.43.101.180
+          - '10.43.101.107:8081'  # Docker front admin (front admin)en 10.43.101.107
+          - '10.43.101.107:8081'  # Docker front admin (front admin)en 10.43.101.107
+          - '10.43.101.180:8085'  # Docker api 2 (apigetway)en 10.43.101.180
+          - '10.43.101.212:8085'  # Docker api 2 (apigetway)en 10.43.101.212
+          - '10.43.101.212:8082'  # Docker back users (sv-users)en 10.43.101.212
+          - '10.43.101.155:8082'  # Docker minio (minio)en 10.43.101.212
+          
